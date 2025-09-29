@@ -1,0 +1,68 @@
+<main class="main">
+  <div class="content">
+    <h1>{{ title }}</h1>
+    <p>
+      Da die Sinnhaftigkeit des Reparaturbonus in Foren immer wieder diskutiert wird, habe ich mir gedacht, einen eigenen
+      Beitrag zum Diskurs zu leisten. Dafür habe ich die Websites von Fahrradwerkstätten sowie deren archivierte Versionen
+      untersucht, um herauszufinden, ob die Preise stärker gestiegen sind als die Inflation.
+      Wie ich zu den Daten gekommen bin, ist im Abschnitt <em>Datensammlung</em> beschrieben. Grundsätzlich habe ich einen
+      Preis vor der Einführung des Reparaturbonus mit einem Preis nach der Einführung verglichen. Dabei habe ich mich
+      ausschließlich auf Fahrradwerkstätten konzentriert, da hier die Datenerhebung deutlich transparenter war.
+      Dieses Projekt untersucht, ob Fahrradwerkstätten den seit 2020
+      (<a href="https://mein.wien.gv.at/wienerreparaturbon/#/" target="_blank" rel="noopener">Wien</a>) bzw. seit dem
+      26. April 2022 (<a href="https://www.reparaturbonus.at/" target="_blank" rel="noopener">bundesweit</a>) geltenden
+      Reparaturbonus genutzt haben, um Preise überdurchschnittlich stark anzuheben.
+    </p>
+
+    <h2>Datensammlung</h2>
+    <ul>
+      <li>Geschäftsauswahl: Fahrradwerkstätten in Wien wurden automatisiert über die OpenStreetMap-API identifiziert (Tag: <code>shop=bicycle</code>).</li>
+      <li>Gefiltert wurden nur jene Geschäfte, die Reparatur- oder Serviceleistungen anbieten.</li>
+      <li>Preiserhebung:</li>
+      <ul>
+        <li><strong>Aktuelle Preise</strong>: Direkt von den Websites der Anbieter, sofern öffentlich verfügbar.</li>
+        <li><strong>Historische Preise</strong>: Über die <a href="https://web.archive.org/" target="_blank" rel="noopener">Wayback Machine</a>, bevorzugt vor Einführung des bundesweiten Reparaturbonus (April 2022).</li>
+        <li><strong>Auswahl der Servicepakete</strong>: Falls mehrere Pakete angeboten wurden, wurden zwei ausgewählt, die in Umfang und Inhalt möglichst vergleichbar sind.</li>
+        <li><strong>Stundensätze</strong>: Falls keine Pauschalpreise angegeben waren, wurde der <strong>Stundensatz</strong> herangezogen und dokumentiert.</li>
+        <li><strong>Inflationsdaten</strong>: Für inflationsbereinigte Vergleiche kam der <a href="https://finanzbildung.oenb.at/docroot/waehrungsrechner/#/" target="_blank" rel="noopener">offizielle Währungsrechner</a> der Österreichischen Nationalbank zum Einsatz.</li>
+      </ul>
+    </ul>
+
+    <blockquote>
+      <em>Die Daten erlauben <strong>keinen qualitativen Vergleich</strong> zwischen den Anbietern, sondern dienen ausschließlich der Analyse der Preisentwicklung innerhalb eines einzelnen Geschäfts.</em>
+    </blockquote>
+
+    <h2>Visualisierungen</h2>
+    <p>
+      Es wurden von Preisen vor und nach 2022 durchgeführt. Dabei wurde die inflationsbereinigte
+      Preisänderung berechnet. Im Histogramm ist ersichtlich, in welchen Bereichen die inflationsbereinigten Preisänderungen
+      (in Prozent) zwischen aktuellem und historischem Preis liegen. Zusätzlich habe ich untersucht, ob es Korrelationen
+      zwischen den Standorten der Radgeschäfte und den prozentualen Preisänderungen gibt. Darüber hinaus wurde geprüft,
+      ob ein Zusammenhang zwischen dem Preisdelta und dem Zeitpunkt des historischen Preises Existiert.
+    </p>
+
+    <h2>Einschränkungen</h2>
+    <ul>
+      <li>Die in diesem Projekt dargestellten Ergebnisse und Beobachtungen basieren auf <strong>stichprobenartigen Recherchen und Annahmen</strong> und erheben keinen Anspruch auf Vollständigkeit oder wissenschaftliche Genauigkeit.</li>
+      <li>Viele Websites von Fahrradgeschäften sind veraltet oder unübersichtlich gestaltet.</li>
+      <!--<li>Mehrere Läden haben nach Einführung des Reparaturbonus explizit Rad-Services in ihr Angebot aufgenommen.</li>-->
+      <li>Falls jemand Fehler entdeckt oder Verbesserungsvorschläge hat, freue ich mich über Rückmeldungen auf der GitHub-Seite des Projekts.</li>
+    </ul>
+
+    <app-histogram [values]="histo" [bins]="bins"></app-histogram>
+
+    <app-map-panel class="block w-full" [records]="filtered"></app-map-panel>
+
+    <app-scatterplot [records]="filtered"></app-scatterplot>
+
+    <app-shops
+      [records]="filtered"
+      [selectionSettings]="selectionSettings"
+      (valueChange)="onChildValue($event)"
+    ></app-shops>
+
+    <div class="divider" role="separator" aria-label="Divider"></div>
+  </div>
+</main>
+
+<router-outlet/>

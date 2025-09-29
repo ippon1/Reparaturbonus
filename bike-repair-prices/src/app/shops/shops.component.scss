@@ -1,0 +1,28 @@
+.th {
+  text-align: left;
+  padding: .5rem;
+  border-bottom: 1px solid #ddd;
+  cursor: pointer;
+  white-space: nowrap;
+  position: sticky;
+  top: 0;
+  background: #fff;
+}
+
+.td {
+  padding: .4rem .5rem;
+  border-bottom: 1px solid #f0f0f0;
+  vertical-align: top;
+}
+
+.right {
+  text-align: right;
+}
+
+tr.selected {
+  background: #fff6e5;
+}
+
+.th.cursor-pointer {
+  @apply select-none hover:bg-gray-100;
+}
