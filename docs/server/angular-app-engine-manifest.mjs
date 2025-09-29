@@ -1,6 +1,6 @@
 
 export default {
-  basePath: 'https://ippon1.github.io/Reparaturbonus',
+  basePath: 'https://ippon1.github.io/Reparaturbonus/docs/browser',
   supportedLocales: {
   "en-US": ""
 },

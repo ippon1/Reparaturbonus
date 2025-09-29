@@ -3,7 +3,7 @@ export default `<!doctype html>
 <head>
   <meta charset="utf-8">
   <title>BikeRepairPrices</title>
-  <base href="https://ippon1.github.io/Reparaturbonus/">
+  <base href="https://ippon1.github.io/Reparaturbonus/docs/browser/">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="icon" type="image/x-icon" href="favicon.ico">
 <link rel="stylesheet" href="styles-OPSORIUJ.css" media="print" onload="this.media='all'"><noscript><link rel="stylesheet" href="styles-OPSORIUJ.css"></noscript></head>
