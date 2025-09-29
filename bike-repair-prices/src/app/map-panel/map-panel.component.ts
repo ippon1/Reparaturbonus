@@ -15,10 +15,9 @@ import {
   SimpleChanges,
   ViewChild,
 } from '@angular/core';
+import * as L from 'leaflet';
 import {CommonModule, isPlatformBrowser} from '@angular/common';
 import type {ShopRecord} from '../types';
-
-type LeafletNS = typeof import('leaflet');
 
 @Component({
   selector: 'app-map-panel',
@@ -37,9 +36,8 @@ export class MapPanelComponent implements AfterViewInit, OnChanges, OnDestroy {
   private injector = inject(Injector);
   private platformId = inject(PLATFORM_ID);
 
-  private L!: LeafletNS;
-  private map: any;
-  private markersLayer: any;
+  private map!: L.Map;
+  private markersLayer!: L.LayerGroup;
 
   // gating + first paint
   private mapReady = signal(false);
@@ -65,28 +63,21 @@ export class MapPanelComponent implements AfterViewInit, OnChanges, OnDestroy {
     }, {injector: this.injector as any});
   }
 
-  async ngAfterViewInit() {
-    if (!isPlatformBrowser(this.platformId)) return;
+  ngAfterViewInit() {
+    if (!isPlatformBrowser(this.platformId)) return; // optional, schadet nicht
 
-    // Lazy-load Leaflet in the browser
-    this.L = (await import('leaflet')) as unknown as LeafletNS;
-
-    this.map = this.L.map(this.mapEl.nativeElement, {
-      center: [48.208, 16.373], // Vienna
+    this.map = L.map(this.mapEl.nativeElement, {
+      center: [48.208, 16.373],
       zoom: 12,
     });
 
-    this.L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
       maxZoom: 19,
       attribution: '&copy; OpenStreetMap contributors',
     }).addTo(this.map);
 
-    // Reusable layer that we clear instead of removing
-    this.markersLayer = this.L.layerGroup().addTo(this.map);
-
-    // Ensure proper sizing if container is flex/hidden at first
+    this.markersLayer = L.layerGroup().addTo(this.map);
     requestAnimationFrame(() => this.map.invalidateSize());
-
     this.mapReady.set(true);
   }
 
@@ -98,12 +89,12 @@ export class MapPanelComponent implements AfterViewInit, OnChanges, OnDestroy {
   }
 
   private renderMarkers() {
-    if (!this.L || !this.map || !this.markersLayer) return;
+    if (!this.markersLayer) return;
 
     // Clear all previous markers
-    this.markersLayer.clearLayers?.();
+    this.markersLayer.clearLayers();
 
-    const bounds = this.L.latLngBounds([]);
+    const bounds = L.latLngBounds([]);
     const data = this.records();
 
     for (const r of data) {
@@ -120,7 +111,7 @@ export class MapPanelComponent implements AfterViewInit, OnChanges, OnDestroy {
       let color = '#999';
       if (first != null && current != null) color = first < current ? '#cc0000' : '#2a6';
 
-      const marker = this.L.circleMarker([lat, lon], {
+      const marker = L.circleMarker([lat, lon], {
         radius: isSelected ? 7 : 5,
         weight: isSelected ? 2 : 1,
         color,
@@ -154,7 +145,6 @@ export class MapPanelComponent implements AfterViewInit, OnChanges, OnDestroy {
   ngOnDestroy() {
     if (this.map) {
       this.map.remove();
-      this.map = null;
     }
   }
 }
