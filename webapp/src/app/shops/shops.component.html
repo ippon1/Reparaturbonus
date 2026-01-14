@@ -1,0 +1,139 @@
+<section class="p-4 space-y-3">
+  <h3 class="text-xl font-semibold">Datensatz</h3>
+
+
+  <div class="text-sm text-gray-600">
+    {{ records().length }} rows
+    • Durchschnittlicher prozentueller Preisunterschied:
+    <ng-container *ngIf="averageDelta() as avg">
+      <strong
+        *ngIf="avg.value !== null"
+        class="average-delta"
+        [class.positive]="avg.trend === 'positive'"
+        [class.negative]="avg.trend === 'negative'"
+      >
+        {{ avg.value }} %
+      </strong>
+      <span *ngIf="avg.value === null">—</span>
+    </ng-container>
+  </div>
+
+  <button type="button" class="border rounded px-3 py-1" (click)="reloadButton()">Reload</button>
+
+  <div class="overflow-auto">
+    <table class="min-w-[1000px] border-collapse">
+      <thead>
+      <tr>
+        <th class="th cursor-pointer" (click)="setSort('name')">
+          Name
+          <span *ngIf="sortKey() === 'name'">{{ sortDir() === 1 ? '▲' : '▼' }}</span>
+          <br/>
+          <input class="border rounded px-1 py-0.5 mt-1 w-full text-xs"
+                 [(ngModel)]="selectionSettings().q" placeholder="Search..."/>
+        </th>
+
+        <th class="th cursor-pointer" (click)="setSort('address')">
+          Address
+          <span *ngIf="sortKey() === 'address'">{{ sortDir() === 1 ? '▲' : '▼' }}</span>
+        </th>
+
+        <th class="th">Website</th>
+
+        <th class="th cursor-pointer" (click)="setSort('offersRepair')">
+          Offers Repair
+          <span *ngIf="sortKey() === 'offersRepair'">{{ sortDir() === 1 ? '▲' : '▼' }}</span>
+          <div class="mt-1 space-y-1 text-xs">
+            <label><input type="checkbox" [(ngModel)]="selectionSettings().offersRepairYes"> ✔</label><br/>
+            <label><input type="checkbox" [(ngModel)]="selectionSettings().offersRepairNo"> —</label>
+          </div>
+        </th>
+
+        <th class="th cursor-pointer" (click)="setSort('firstPrice')">
+          First Price
+          <span *ngIf="sortKey() === 'firstPrice'">{{ sortDir() === 1 ? '▲' : '▼' }}</span>
+          <div class="mt-1 text-xs">
+            <label><input type="checkbox" [(ngModel)]="selectionSettings().hasFirstPrice"> is set</label><br/>
+            <label><input type="checkbox" [(ngModel)]="selectionSettings().missingFirstPrice"> is not set</label>
+          </div>
+        </th>
+
+        <th class="th cursor-pointer" (click)="setSort('firstPriceInflationAdjusted')">
+          First Price (Infl. adj.)
+          <span *ngIf="sortKey() === 'firstPriceInflationAdjusted'">{{ sortDir() === 1 ? '▲' : '▼' }}</span>
+          <div class="mt-1 text-xs">
+            <label><input type="checkbox" [(ngModel)]="selectionSettings().hasFirstAdj"> is set</label><br/>
+            <label><input type="checkbox" [(ngModel)]="selectionSettings().missingFirstAdj"> is not set</label>
+          </div>
+        </th>
+
+        <th class="th cursor-pointer" (click)="setSort('firstPriceDate')">
+          First Price Date
+          <span *ngIf="sortKey() === 'firstPriceDate'">{{ sortDir() === 1 ? '▲' : '▼' }}</span>
+          <div class="mt-1 text-xs">
+            <input type="date" class="border rounded px-1 py-0.5" [(ngModel)]="selectionSettings().firstDateFrom"/><br/>
+            <input type="date" class="border rounded px-1 py-0.5" [(ngModel)]="selectionSettings().firstDateTo"/>
+          </div>
+        </th>
+
+        <th class="th cursor-pointer" (click)="setSort('currentPrice')">
+          Current Price
+          <span *ngIf="sortKey() === 'currentPrice'">{{ sortDir() === 1 ? '▲' : '▼' }}</span>
+          <div class="mt-1 text-xs">
+            <label><input type="checkbox" [(ngModel)]="selectionSettings().hasCurrentPrice"> is set</label><br/>
+            <label><input type="checkbox" [(ngModel)]="selectionSettings().missingCurrentPrice"> is not set</label>
+          </div>
+        </th>
+
+        <th class="th cursor-pointer" (click)="setSort('currentPriceDate')">
+          Current Price Date
+          <span *ngIf="sortKey() === 'currentPriceDate'">{{ sortDir() === 1 ? '▲' : '▼' }}</span>
+          <div class="mt-1 text-xs">
+            <input type="date" class="border rounded px-1 py-0.5"
+                   [(ngModel)]="selectionSettings().currentDateFrom"/><br/>
+            <input type="date" class="border rounded px-1 py-0.5" [(ngModel)]="selectionSettings().currentDateTo"/>
+          </div>
+        </th>
+
+        <th class="th cursor-pointer" (click)="setSort('deltaVsFirstAdj')">
+          Δ vs First adj.<br/>(abs)
+          <span *ngIf="sortKey() === 'deltaVsFirstAdj'">{{ sortDir() === 1 ? '▲' : '▼' }}</span>
+        </th>
+
+        <th class="th cursor-pointer" (click)="setSort('deltaVsFirstAdjPercentage')">
+          Δ vs First adj.<br/>(%)
+          <span *ngIf="sortKey() === 'deltaVsFirstAdjPercentage'">{{ sortDir() === 1 ? '▲' : '▼' }}</span>
+        </th>
+
+        <th class="th">First<br/>Source</th>
+        <th class="th">Current<br/>Source</th>
+      </tr>
+      </thead>
+
+      <tbody>
+      <tr *ngFor="let r of sortedRecords()">
+        <td class="td">{{ r.name }}</td>
+        <td class="td">{{ r.address }}</td>
+        <td class="td"><a *ngIf="r.website" [href]="r.website" target="_blank" rel="noopener">site</a></td>
+        <td class="td"><span *ngIf="r.offersRepair === true">✔</span><span *ngIf="r.offersRepair !== true">—</span></td>
+        <td class="td right">{{ fmt(r.firstPrice) }}</td>
+        <td class="td right">{{ fmt(r.firstPriceInflationAdjusted) }}</td>
+        <td class="td">{{ r.firstPriceDate }}</td>
+        <td class="td right">{{ fmt(r.currentPrice) }}</td>
+        <td class="td">{{ r.currentPriceDate }}</td>
+        <td class="td right" [class.positive]="(r.deltaVsFirstAdj ?? 0) >= 0"
+            [class.negative]="(r.deltaVsFirstAdj ?? 0) < 0">
+          {{ fmt(r.deltaVsFirstAdj) }}
+        </td>
+        <td class="td right" [class.positive]="(r.deltaVsFirstAdjPercentage ?? 0) >= 0"
+            [class.negative]="(r.deltaVsFirstAdjPercentage ?? 0) < 0">
+          {{ decimaltoPercentage(r.deltaVsFirstAdjPercentage) }}
+        </td>
+        <td class="td"><a *ngIf="r.firstPriceSource" [href]="r.firstPriceSource!" target="_blank"
+                          rel="noopener">link</a></td>
+        <td class="td"><a *ngIf="r.currentPriceSource" [href]="r.currentPriceSource!" target="_blank" rel="noopener">link</a>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</section>

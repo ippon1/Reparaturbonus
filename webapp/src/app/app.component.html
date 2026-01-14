@@ -1,0 +1,143 @@
+<main class="main">
+  <!-- Hero Section -->
+  <app-story-section width="standard">
+    <h1 class="hero-title">{{ title }}</h1>
+    <p class="hero-lede">
+      Die vorliegende Untersuchung analysiert öffentlich verfügbare Preisinformationen von Fahrradwerkstätten und setzt
+      diese in Relation zur allgemeinen Preisentwicklung. Ziel ist es, die beobachteten Preisänderungen zeitlich
+      einzuordnen, ohne Aussagen über deren Ursachen oder qualitative Unterschiede zwischen den Anbietern zu treffen.
+    </p>
+  </app-story-section>
+
+  <!-- Framing: The Question -->
+  <app-story-section width="standard">
+    <h2>Die Ausgangsfrage</h2>
+    <!--seit 2020 (<a href="https://mein.wien.gv.at/wienerreparaturbon/#/" target="_blank" rel="noopener">Wien</a>) bzw.-->
+    <p>
+      Vor dem Hintergrund öffentlicher Diskussionen über den Reparaturbonus verfolgt dieses Projekt das Ziel,
+      die Preisentwicklung bei Radreparaturen in Wien datenbasiert einzuordnen. Dazu werden historische Preise aus der
+      Zeit vor Einführung des Reparaturbonus
+      (<a href="https://www.reparaturbonus.at/" target="_blank" rel="noopener">bundesweit</a> am 26. April 2022)
+      mit Preisen aus dem Jahr 2025 verglichen und in Relation zur allgemeinen Inflation gesetzt.
+.
+    </p>
+    <p>
+      Hierfür wurden öffentlich zugängliche Preisangaben auf den Websites von Fahrradwerkstätten sowie deren archivierte
+      Versionen herangezogen. Auf dieser Basis wurde jeweils ein Preis vor Einführung des Reparaturbonus mit einem
+      späteren Vergleichspreis gegenübergestellt und in Relation zur allgemeinen Inflation gesetzt. Die Analyse
+       beschränkt sich auf Fahrradwerkstätten, da die Datenerhebung in diesem Bereich eine höhere Transparenz aufweist.
+    </p>
+  </app-story-section>
+
+  <!-- Methodology Section -->
+  <app-story-section width="standard" background="alt">
+    <h2>Methodik & Datensammlung</h2>
+    <p>
+      Hier ist genau beschrieben, wie die Daten erhoben wurden:
+    </p>
+
+    <h3>Geschäftsauswahl</h3>
+    <ul>
+      <li>Fahrradwerkstätten in Wien wurden automatisiert über die OpenStreetMap-API identifiziert (Tag: <code>shop=bicycle</code>).</li>
+      <li>Gefiltert wurden nur jene Geschäfte, die Reparatur- oder Serviceleistungen anbieten.</li>
+    </ul>
+
+    <h3>Preiserhebung</h3>
+    <ul>
+      <li><strong>Aktuelle Preise</strong>: Direkt von den Websites der Anbieter, sofern öffentlich verfügbar.</li>
+      <li><strong>Historische Preise</strong>: Über die <a href="https://web.archive.org/" target="_blank" rel="noopener">Wayback Machine</a>, bevorzugt vor Einführung des bundesweiten Reparaturbonus (April 2022).</li>
+      <li><strong>Auswahl der Servicepakete</strong>: Falls mehrere Pakete angeboten wurden, wurden zwei ausgewählt, die in Umfang und Inhalt möglichst vergleichbar sind.</li>
+      <li><strong>Stundensätze</strong>: Falls keine Pauschalpreise angegeben waren, wurde der <strong>Stundensatz</strong> herangezogen und dokumentiert.</li>
+      <li><strong>Inflationsdaten</strong>: Für inflationsbereinigte Vergleiche kam der <a href="https://finanzbildung.oenb.at/docroot/waehrungsrechner/#/" target="_blank" rel="noopener">offizielle Währungsrechner</a> der Österreichischen Nationalbank zum Einsatz.</li>
+    </ul>
+
+    <app-callout variant="warning" icon="⚠️">
+      <strong>Wichtiger Hinweis:</strong>
+      Die Daten erlauben <strong>keinen qualitativen Vergleich</strong> zwischen den Anbietern, sondern dienen ausschließlich der Analyse der Preisentwicklung innerhalb eines einzelnen Geschäfts.
+    </app-callout>
+  </app-story-section>
+
+  <!-- Visual Exploration Section -->
+  <app-story-section width="standard">
+    <h2>Die Daten im Überblick</h2>
+    <p>
+      Es wurden Preise vor und nach 2022 erhoben. Dabei wurde die inflationsbereinigte
+      Preisänderung berechnet. Die folgenden Visualisierungen zeigen die Verteilung der Preisänderungen,
+      deren geografische Verteilung und zeitliche Zusammenhänge.
+    </p>
+
+    <!-- Histogram Chart -->
+    <app-chart-block
+      title="Verteilung der inflationsbereinigten Preisänderungen"
+      annotation="">
+      <app-histogram [values]="histo" [bins]="bins"></app-histogram>
+    </app-chart-block>
+
+    <!-- Map Chart -->
+    <app-chart-block
+      title="Geografische Verteilung der Fahrradwerkstätten"
+      description="Jeder Marker repräsentiert eine Werkstatt. Die Farbe zeigt die Preisänderung an."
+      annotation="">
+      <app-map-panel class="block w-full" [records]="filtered"></app-map-panel>
+    </app-chart-block>
+
+    <!-- Scatterplot Chart -->
+    <app-chart-block
+      title="Zeitlicher Zusammenhang"
+      description="Gibt es einen Zusammenhang zwischen dem Alter des ersten Preises und der inflationsbereinigten Preisänderung?"
+      annotation="Die X-Achse zeigt das Datum des ersten Preises, die Y-Achse die Differenz zwischen inflationsbereinigtem und aktuellem Preis. Punkte weiter links bedeuten eine längere Zeitspanne zwischen den beiden Preiserhebungen.">
+      <app-scatterplot [records]="filtered"></app-scatterplot>
+    </app-chart-block>
+  </app-story-section>
+
+  <!-- Key Findings / Interpretation -->
+  <app-story-section width="standard">
+    <h2>Interpretation & Einschränkungen</h2>
+
+    <h3>Was die Daten zeigen</h3>
+    <p>
+      Die Visualisierungen bieten Einblicke in die Preisentwicklung, erlauben jedoch keine abschließenden
+      Kausalaussagen. Preisänderungen können durch eine Vielzahl von Faktoren beeinflusst werden, etwa ein
+      verstärkter Fokus auf den Ausbau und die Förderung der Fahrradinfrastruktur.
+    </p>
+
+    <h3>Wichtige Einschränkungen</h3>
+    <app-callout variant="neutral">
+      <ul>
+        <li>Die in diesem Projekt dargestellten Ergebnisse und Beobachtungen basieren auf <strong>stichprobenartigen Recherchen und Annahmen</strong> und erheben keinen Anspruch auf Vollständigkeit oder wissenschaftliche Genauigkeit.</li>
+        <li>Viele Websites von Fahrradgeschäften sind veraltet oder unübersichtlich gestaltet, was die Datenerhebung erschwert hat.</li>
+        <li>Die Vergleichbarkeit der Services ist nicht in jedem Fall perfekt gegeben, da sich Leistungsumfänge ändern können.</li>
+        <li>Falls jemand Fehler entdeckt oder Verbesserungsvorschläge hat, freue ich mich über Rückmeldungen auf der <a href="https://github.com/ippon1/Reparaturbonus" target="_blank" rel="noopener">GitHub-Seite des Projekts</a>.</li>
+      </ul>
+    </app-callout>
+  </app-story-section>
+
+  <!-- Data Explorer Section - BREAKOUT WIDTH -->
+  <app-story-section width="breakout">
+    <h2>Daten im Detail</h2>
+    <p>
+      Für alle, die tiefer in die Daten eintauchen möchten: Die vollständige Tabelle mit allen erhobenen Preisen,
+      Quellen und Berechnungen. Jede Zeile ist mit den Originalquellen verlinkt.
+    </p>
+
+    <div class="table-wrapper">
+      <app-shops
+        [records]="filtered"
+        [selectionSettings]="selectionSettings"
+        (valueChange)="onChildValue($event)"
+      ></app-shops>
+    </div>
+  </app-story-section>
+
+  <!-- Footer -->
+  <app-story-section width="standard">
+    <div class="divider" role="separator" aria-label="Divider"></div>
+    <p class="text-small text-muted">
+      <!--Datenanalyse und Visualisierung:<br>-->
+      Quellen: OpenStreetMap, Wayback Machine, Österreichische Nationalbank<br>
+      <a href="https://github.com" target="_blank" rel="noopener">Projekt auf GitHub</a>
+    </p>
+  </app-story-section>
+</main>
+
+<router-outlet/>

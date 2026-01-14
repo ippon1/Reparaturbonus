@@ -1,0 +1,34 @@
+.histogram-wrapper {
+  position: relative;
+  margin: 1.5rem 0;
+}
+
+.chart-host {
+  height: 400px;
+  width: 100%;
+  background: var(--color-background);
+  border-radius: 4px;
+
+  @media (max-width: 768px) {
+    height: 320px;
+  }
+}
+
+.tooltip {
+  position: absolute;
+  pointer-events: none;
+  background: rgba(0, 0, 0, 0.85);
+  color: white;
+  padding: 0.5rem 0.75rem;
+  border-radius: 4px;
+  font-size: 0.875rem;
+  opacity: 0;
+  transition: opacity 0.2s;
+  z-index: 100;
+  transform: translate(-50%, -100%);
+  white-space: nowrap;
+}
+
+h2 {
+  display: none; // Title now handled by chart-block component
+}

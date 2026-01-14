@@ -1,0 +1,10 @@
+<div
+  class="callout"
+  [class.callout-info]="variant === 'info'"
+  [class.callout-warning]="variant === 'warning'"
+  [class.callout-neutral]="variant === 'neutral'">
+  <div class="callout-icon" *ngIf="icon">{{ icon }}</div>
+  <div class="callout-content">
+    <ng-content></ng-content>
+  </div>
+</div>

@@ -1,0 +1,8 @@
+<section
+  class="story-section"
+  [class.content-standard]="width === 'standard'"
+  [class.content-breakout]="width === 'breakout'"
+  [class.bg-alt]="background === 'alt'"
+  [ngClass]="cssClass">
+  <ng-content></ng-content>
+</section>

@@ -1,0 +1,51 @@
+.chart-block {
+  margin: 2.5rem 0;
+}
+
+.chart-header {
+  margin-bottom: 1.5rem;
+}
+
+.chart-title {
+  font-size: 1.5rem;
+  font-family: var(--font-serif);
+  font-weight: 700;
+  margin: 0 0 0.5rem 0;
+  color: var(--color-text);
+}
+
+.chart-description {
+  font-size: 1rem;
+  color: var(--color-text-muted);
+  margin: 0;
+  line-height: 1.6;
+}
+
+.chart-annotation {
+  background: #fffdf0;
+  border-left: 3px solid #f4c430;
+  padding: 0.75rem 1rem;
+  margin-bottom: 1.5rem;
+  font-size: 0.95rem;
+  line-height: 1.5;
+
+  strong {
+    color: var(--color-text);
+    font-weight: 600;
+  }
+}
+
+.chart-content {
+  // Charts will be rendered here
+  margin-top: 1rem;
+}
+
+@media (max-width: 768px) {
+  .chart-title {
+    font-size: 1.25rem;
+  }
+
+  .chart-annotation {
+    font-size: 0.875rem;
+  }
+}

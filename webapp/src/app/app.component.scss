@@ -1,0 +1,77 @@
+.main {
+  min-height: 100vh;
+  padding: 2rem 0;
+  background: var(--color-background);
+  overflow-x: hidden; /* Prevent horizontal page scroll */
+
+  @media (max-width: 768px) {
+    padding: 1rem 0;
+  }
+}
+
+// Hero section styling
+.hero-title {
+  font-size: 3rem;
+  font-family: var(--font-serif);
+  font-weight: 700;
+  line-height: 1.1;
+  margin-bottom: 1.5rem;
+  color: var(--color-text);
+
+  @media (max-width: 768px) {
+    font-size: 2rem;
+  }
+}
+
+.hero-lede {
+  font-size: 1.35rem;
+  line-height: 1.6;
+  color: var(--color-text-muted);
+  margin-bottom: 0;
+
+  @media (max-width: 768px) {
+    font-size: 1.125rem;
+  }
+}
+
+// Divider
+.divider {
+  height: 1px;
+  background: var(--color-border);
+  margin: 3rem 0;
+  border: none;
+}
+
+// Table wrapper - handles horizontal scroll for data table
+.table-wrapper {
+  overflow-x: auto;
+  overflow-y: visible;
+  margin: 1rem 0;
+
+  /* Smooth scrolling */
+  -webkit-overflow-scrolling: touch;
+
+  /* Hide scrollbar on webkit browsers for cleaner look (optional) */
+  &::-webkit-scrollbar {
+    height: 8px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: var(--color-background-alt);
+    border-radius: 4px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: var(--color-border);
+    border-radius: 4px;
+
+    &:hover {
+      background: #999;
+    }
+  }
+
+  @media (max-width: 1199px) {
+    /* On smaller screens, add subtle shadow to indicate scrollability */
+    box-shadow: inset -10px 0 10px -10px rgba(0, 0, 0, 0.1);
+  }
+}

@@ -1,0 +1,16 @@
+section {
+  margin: 1.5rem 0;
+}
+
+h2 {
+  display: none; // Title now handled by chart-block component
+}
+
+.text-xs {
+  font-size: 0.75rem;
+  margin-top: 0.5rem;
+}
+
+.text-gray-600 {
+  color: var(--color-text-muted);
+}

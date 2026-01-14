@@ -1,0 +1,170 @@
+/* Global Editorial Styles - Data Journalism Theme */
+
+@import 'leaflet/dist/leaflet.css';
+
+/* Typography System */
+:root {
+  --font-serif: Georgia, 'Times New Roman', serif;
+  --font-sans: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  --font-mono: 'SF Mono', Monaco, 'Cascadia Code', 'Courier New', monospace;
+
+  --color-text: #1a1a1a;
+  --color-text-muted: #666;
+  --color-accent: #0066cc;
+  --color-border: #e0e0e0;
+  --color-background: #ffffff;
+  --color-background-alt: #f8f8f8;
+
+  /* Unified content width system */
+  --content-max-width: 1035px; /* 900px + 15% */
+  --content-breakout-width: 1728px; /* 1035px + 67% */
+  --spacing-section: 4rem;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: var(--font-sans);
+  color: var(--color-text);
+  background: var(--color-background);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden; /* Prevent horizontal page scroll */
+}
+
+/* Editorial Typography */
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-serif);
+  font-weight: 700;
+  line-height: 1.2;
+  margin: 0;
+  color: var(--color-text);
+}
+
+h1 {
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+
+  @media (max-width: 768px) {
+    font-size: 2rem;
+  }
+}
+
+h2 {
+  font-size: 1.75rem;
+  margin-bottom: 0.75rem;
+  margin-top: 2.5rem;
+
+  @media (max-width: 768px) {
+    font-size: 1.5rem;
+  }
+}
+
+h3 {
+  font-size: 1.25rem;
+  margin-bottom: 0.5rem;
+  margin-top: 1.5rem;
+}
+
+p {
+  font-size: 1.125rem;
+  line-height: 1.7;
+  margin: 0 0 1.25rem 0;
+
+  @media (max-width: 768px) {
+    font-size: 1rem;
+  }
+}
+
+/* Links */
+a {
+  color: var(--color-accent);
+  text-decoration: none;
+  border-bottom: 1px solid transparent;
+  transition: border-color 0.2s;
+
+  &:hover {
+    border-bottom-color: var(--color-accent);
+  }
+}
+
+/* Code */
+code {
+  font-family: var(--font-mono);
+  background: var(--color-background-alt);
+  padding: 0.125rem 0.25rem;
+  border-radius: 3px;
+  font-size: 0.9em;
+}
+
+/* Lists */
+ul, ol {
+  font-size: 1.125rem;
+  line-height: 1.7;
+  margin: 1rem 0;
+  padding-left: 1.5rem;
+
+  @media (max-width: 768px) {
+    font-size: 1rem;
+  }
+}
+
+li {
+  margin-bottom: 0.5rem;
+}
+
+/* Blockquotes */
+blockquote {
+  margin: 2rem 0;
+  padding: 1rem 1.5rem;
+  background: var(--color-background-alt);
+  border-left: 4px solid var(--color-accent);
+  font-style: italic;
+
+  em {
+    font-style: normal;
+  }
+
+  strong {
+    font-weight: 600;
+  }
+}
+
+/* Utility Classes */
+.content-width {
+  max-width: var(--content-max-width);
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
+
+  @media (max-width: 768px) {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+}
+
+.section-spacing {
+  margin-top: var(--spacing-section);
+  margin-bottom: var(--spacing-section);
+}
+
+.text-muted {
+  color: var(--color-text-muted);
+}
+
+.text-small {
+  font-size: 0.875rem;
+}
+
+/* Responsive helpers */
+@media (max-width: 768px) {
+  :root {
+    --spacing-section: 2.5rem;
+  }
+}

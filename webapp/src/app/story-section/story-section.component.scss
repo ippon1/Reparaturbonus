@@ -1,0 +1,65 @@
+.story-section {
+  padding-top: 0;
+  padding-bottom: 2rem;
+  margin-bottom: 2rem;
+
+  @media (max-width: 768px) {
+    padding-top: 0;
+    padding-bottom: 1.5rem;
+    margin-bottom: 1.5rem;
+  }
+}
+
+/* Standard content width - used for all regular sections */
+.content-standard {
+  max-width: var(--content-max-width);
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
+
+  @media (max-width: 768px) {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+}
+
+/* Breakout width - special case for data table section */
+.content-breakout {
+  margin-left: auto;
+  margin-right: auto;
+
+  /* Large screens: 60% wider than standard (30% each side) */
+  @media (min-width: 1200px) {
+    max-width: var(--content-breakout-width);
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+  }
+
+  /* Small/medium screens: use viewport width with margins */
+  @media (max-width: 1199px) {
+    width: calc(100vw - 4vw);
+    max-width: calc(100vw - 4vw);
+    padding-left: 0;
+    padding-right: 0;
+  }
+}
+
+/* Alternate background that extends full-width */
+.bg-alt {
+  background: var(--color-background-alt);
+  position: relative;
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 50%;
+    right: 50%;
+    margin-left: -50vw;
+    margin-right: -50vw;
+    background: var(--color-background-alt);
+    z-index: -1;
+  }
+}

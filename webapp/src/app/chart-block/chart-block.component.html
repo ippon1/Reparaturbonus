@@ -1,0 +1,14 @@
+<div class="chart-block">
+  <div class="chart-header" *ngIf="title || description">
+    <h3 *ngIf="title" class="chart-title">{{ title }}</h3>
+    <p *ngIf="description" class="chart-description">{{ description }}</p>
+  </div>
+
+  <div class="chart-annotation" *ngIf="annotation">
+    <strong>Was zu beachten ist:</strong> {{ annotation }}
+  </div>
+
+  <div class="chart-content">
+    <ng-content></ng-content>
+  </div>
+</div>

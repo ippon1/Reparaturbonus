@@ -1,0 +1,35 @@
+.sp-host {
+  height: 400px;
+  width: 100%;
+  margin: 1.5rem 0;
+  background: var(--color-background);
+  border-radius: 4px;
+  position: relative;
+
+  @media (max-width: 768px) {
+    height: 320px;
+  }
+
+  svg {
+    max-width: 100%;
+    height: 100%;
+  }
+}
+
+.sp-tooltip {
+  position: fixed;
+  display: none;
+  pointer-events: none;
+  background: rgba(0, 0, 0, 0.85);
+  color: white;
+  padding: 0.5rem 0.75rem;
+  border-radius: 4px;
+  font-size: 0.875rem;
+  transition: opacity 0.2s;
+  z-index: 1000;
+  white-space: nowrap;
+}
+
+h2 {
+  display: none; // Title now handled by chart-block component
+}
